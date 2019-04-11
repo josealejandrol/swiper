@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {StyleSheet,Text,View} from 'react-native';
 
-import HomeScreen from './HomeScreen';
+import AppStackNavigator from './app/navigator/AppStackNavigator'
 
 export default class App extends Component {
   render(){
     return (
-      <HomeScreen/>
+      <AppStackNavigator/>
     );
   }
 }
