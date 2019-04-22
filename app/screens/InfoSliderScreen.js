@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View,Image,TouchableOpacity} from 'react-native';
+import {StyleSheet,Text,View,Image,TouchableOpacity,Button} from 'react-native';
 
 import Swiper from 'react-native-swiper';
 
@@ -20,6 +20,10 @@ export default class InfoSliderScreen extends Component {
             <TouchableOpacity style={styles.boton} onPress={() => navigate('Login')}>
                 <Image source={{uri: 'https://s3.us-east-2.amazonaws.com/imagenesswipereactnative/flecha-derecha.png'}} style={styles.flechaDerecha} />
             </TouchableOpacity>
+            <Button
+                    title="Go to FirstScreen"
+                    onPress={() => navigate('Home')}
+            />
         </View>
         <View style={styles.slide2}>
             <Image source={{uri: 'https://s3.us-east-2.amazonaws.com/imagenesswipereactnative/splash2.png'}} style={{width: 200, height: 200}} />

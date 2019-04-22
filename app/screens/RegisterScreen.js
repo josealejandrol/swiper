@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import {StyleSheet,Text,View, Button, ImageBackground,Dimensions,TextInput, Image} from 'react-native';
+import {StyleSheet,Text,View, Button, ImageBackground,Dimensions,TextInput, Image,CheckBox} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 var {height, width} = Dimensions.get('window')
 
-export default class LoginScreen extends Component {
+export default class RegisterScreen extends Component {
     static navigationOptions = {
-        title: 'Login',
+        title: 'Register',
         header: null
     };
+
+    state = {
+        trueCheckBoxIsOn: true,
+        falseCheckBoxIsOn: false,
+    }
+
   render(){
     const {navigate} = this.props.navigation;
     const Divider = (props) => {
@@ -25,7 +31,7 @@ export default class LoginScreen extends Component {
                     source={{uri: 'ahttps://s3.us-east-2.amazonaws.com/imagenesswipereactnative/FondoLogin.jpg'}}
                     style={{width:width, height:height}}
                 >
-                <Text style={styles.text}>Login</Text>
+                <Text style={styles.text}>Register</Text>
                 <View style={styles.imageContainer}>
                   <Image 
                     source={{uri: 'https://s3.us-east-2.amazonaws.com/imagenesswipereactnative/ykeky.png'}}
@@ -36,24 +42,39 @@ export default class LoginScreen extends Component {
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                 <TextInput
                     style={{height: 40, width: '80%', borderBottomColor: '#9e9e9e', borderBottomWidth: 2, marginBottom:20}}
+                    placeholder="Ingresar nombre"
+                  />
+                <TextInput
+                    style={{height: 40, width: '80%', borderBottomColor: '#9e9e9e', borderBottomWidth: 2, marginBottom:20}}
                     placeholder="Ingresar correo"
                   />
                   <TextInput
-                    style={{height: 40, width: '80%', borderBottomColor: '#9e9e9e', borderBottomWidth: 2, marginBottom:0 }}
+                    style={{height: 40, width: '80%', borderBottomColor: '#9e9e9e', borderBottomWidth: 2, marginBottom:20 }}
                     placeholder="Ingresar contraseña"
                     secureTextEntry={true}
                   />
-                   <TouchableOpacity style={{ color: 'black', fontWeight: 'bold', marginBottom:20}}>
-                    <Text style={{fontSize: 15}}>                                          Olvidaste tú contraseña?</Text>
-                  </TouchableOpacity>
+                  <TextInput
+                    style={{height: 40, width: '80%', borderBottomColor: '#9e9e9e', borderBottomWidth: 2, marginBottom:10 }}
+                    placeholder="Ingresar nuevamente contraseña"
+                    secureTextEntry={true}
+                  />
+                  <View style={{flexDirection: 'row', left:-38}}>
+                    <CheckBox
+                        onValueChange={value => this.setState({ falseCheckBoxIsOn: value})}
+                        style={styles.checkbox}
+                        value={this.state.falseCheckBoxIsOn}
+                    />
+                    <Text style={{marginTop: 5}}>Aceptar términos y condiciones</Text>
+                 </View>
                   <TouchableOpacity style={{ width: 300,
                     height: 45,
                     borderRadius: 6,
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#9e9e9e'}}
+                    onPress={() => navigate('Login')}
                   >
-                  <Text style={{fontSize: 18,color: 'white'}}>Login</Text>
+                  <Text style={{fontSize: 18,color: 'white'}}>Register</Text>
                   </TouchableOpacity>
                   <Divider style={styles.divider}></Divider>
                   <FontAwesome.Button
@@ -62,7 +83,7 @@ export default class LoginScreen extends Component {
                     onPress={alert}
                     backgroundColor='blue'
                   >
-                  <Text style={styles.loginButtonTitle}>Login con Facebook</Text>
+                  <Text style={styles.loginButtonTitle}>Registrarse en Facebook</Text>
                   </FontAwesome.Button>
                   <FontAwesome.Button
                     style={styles.facebookButton}
@@ -70,17 +91,9 @@ export default class LoginScreen extends Component {
                     onPress={alert}
                     backgroundColor='red'
                   >
-                  <Text style={styles.loginButtonTitle}>Login con Google</Text>
+                  <Text style={styles.loginButtonTitle}>Registrarse eh Google</Text>
                   </FontAwesome.Button>
-
-                  <TouchableOpacity style={{marginTop: 108, color: 'black', fontWeight: 'bold'}} onPress={() => navigate('Register')}>
-                    <Text style={{fontSize: 20}}>Crear Cuenta Nueva</Text>
-                  </TouchableOpacity>
                 </View>  
-                {/* <Button
-                    title="Go to FirstScreen"
-                    onPress={() => navigate('Home')}
-                /> */}
                 </ImageBackground>
            </View>
     );
@@ -101,8 +114,10 @@ const styles = StyleSheet.create({
       imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        //backgroundColor: 'red',
         flexDirection: 'row'
+      },
+      checkbox: {
+        marginBottom: 10,
       },
       divider: {
         flexDirection: 'row',
