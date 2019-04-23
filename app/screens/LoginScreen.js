@@ -3,6 +3,8 @@ import {StyleSheet,Text,View, Button, ImageBackground,Dimensions,TextInput, Imag
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
+import {LoginButton,AccessToken,LoginManager} from 'react-native-fbsdk';
+
 var {height, width} = Dimensions.get('window')
 
 export default class LoginScreen extends Component {
@@ -10,6 +12,21 @@ export default class LoginScreen extends Component {
         title: 'Login',
         header: null
     };
+
+    async loginFacebook() {
+      try {
+        let result = await LoginManager.logInWithReadPermissions(["public_profile","email"])
+        if (result.isCancelled) {
+          alert('Login was cancelled');
+        } else {
+          alert('Login was successful with permissions: ' + result.grantedPermissions.toString());
+          console.warn(result.grantedPermissions.toString());
+        }
+      } catch(error) {
+        alert('Login failed with error: '+error)
+      }
+    }
+
   render(){
     const {navigate} = this.props.navigation;
     const Divider = (props) => {
@@ -59,7 +76,7 @@ export default class LoginScreen extends Component {
                   <FontAwesome.Button
                     style={styles.facebookButton}
                     name="facebook-f"
-                    onPress={alert}
+                    onPress={this.loginFacebook}
                     backgroundColor='blue'
                   >
                   <Text style={styles.loginButtonTitle}>Login con Facebook</Text>
@@ -72,7 +89,24 @@ export default class LoginScreen extends Component {
                   >
                   <Text style={styles.loginButtonTitle}>Login con Google</Text>
                   </FontAwesome.Button>
-
+                  <LoginButton
+                  style={styles.facebookButtonOriginal}
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("login has error: " + result.error);
+              } else if (result.isCancelled) {
+                console.log("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => console.log("logout.")}/>
                   <TouchableOpacity style={{marginTop: 108, color: 'black', fontWeight: 'bold'}} onPress={() => navigate('Register')}>
                     <Text style={{fontSize: 20}}>Crear Cuenta Nueva</Text>
                   </TouchableOpacity>
@@ -129,6 +163,12 @@ const styles = StyleSheet.create({
       textOR: {
         flex: 1,
         textAlign: 'center'
+      },
+      facebookButtonOriginal: {
+        width: 300,
+        height: 45,
+        borderRadius: 6,
+        justifyContent: 'center',
       },
 }
 )
