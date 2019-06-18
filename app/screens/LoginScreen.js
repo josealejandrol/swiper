@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {LoginButton,AccessToken,LoginManager} from 'react-native-fbsdk';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
 var {height, width} = Dimensions.get('window')
 
@@ -39,7 +40,7 @@ export default class LoginScreen extends Component {
     return (
         <View>
                 <ImageBackground
-                    source={{uri: 'ahttps://s3.us-east-2.amazonaws.com/imagenesswipereactnative/FondoLogin.jpg'}}
+                    source={{uri: 'https://s3.us-east-2.amazonaws.com/imagenesswipereactnative/FondoLogin.jpg'}}
                     style={{width:width, height:height}}
                 >
                 <Text style={styles.text}>Login</Text>
@@ -107,6 +108,13 @@ export default class LoginScreen extends Component {
             }
           }
           onLogoutFinished={() => console.log("logout.")}/>
+          <GoogleSigninButton
+            style={{ width: 192, height: 48 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Light}
+            onPress={alert/**this._signIn*/}
+            //disabled={this.state.isSigninInProgress} 
+          />
                   <TouchableOpacity style={{marginTop: 108, color: 'black', fontWeight: 'bold'}} onPress={() => navigate('Register')}>
                     <Text style={{fontSize: 20}}>Crear Cuenta Nueva</Text>
                   </TouchableOpacity>
